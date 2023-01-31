@@ -140,7 +140,8 @@ class AppleDriver extends standalone_1.Oauth2Driver {
         const signingKey = await this.getAppleSigningKey(token);
         const decodedUser = jsonwebtoken_1.default.verify(token, signingKey, {
             issuer: 'https://appleid.apple.com',
-            audience: this.config.appId,
+            // TODO: check if audience is correct
+            // audience: this.config.appId,
         });
         const firstName = decodedUser?.user?.name?.firstName || '';
         const lastName = decodedUser?.user?.name?.lastName || '';

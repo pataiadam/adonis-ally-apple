@@ -173,7 +173,7 @@ class AppleDriver extends standalone_1.Oauth2Driver {
         }
         return this.getAccessToken((request) => {
             request.header('Content-Type', 'application/x-www-form-urlencoded');
-            request.field('client_id', this.config.appId);
+            request.field('client_id', this.config.clientId);
             request.field('client_secret', this.generateClientSecret());
             request.field(this.codeParamName, this.getCode());
             if (typeof callback === 'function') {

@@ -174,7 +174,7 @@ export class AppleDriver extends Oauth2Driver<AppleAccessToken, AppleScopes> {
      */
     request.scopes(this.config.scopes || ['email'])
 
-    request.param('client_id', this.config.appId)
+    request.param('client_id', this.config.clientId)
     request.param('response_type', 'code')
     request.param('response_mode', 'form_post')
     request.param('grant_type', 'authorization_code')

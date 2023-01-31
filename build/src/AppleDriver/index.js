@@ -186,8 +186,11 @@ class AppleDriver extends standalone_1.Oauth2Driver {
      * Returns details for the authorized user
      */
     async user(callback) {
+        console.log('ally:apple:user');
         const token = await this.accessToken(callback);
+        console.log('ally:apple:user:token', token);
         const user = await this.getUserInfo(token.id_token);
+        console.log('ally:apple:user:user', user);
         return {
             ...user,
             token,

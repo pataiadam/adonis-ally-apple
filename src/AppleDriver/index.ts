@@ -279,9 +279,11 @@ export class AppleDriver extends Oauth2Driver<AppleAccessToken, AppleScopes> {
    * Returns details for the authorized user
    */
   public async user(callback?: (request: ApiRequestContract) => void) {
+    console.log('ally:apple:user')
     const token = await this.accessToken(callback)
+    console.log('ally:apple:user:token', token)
     const user = await this.getUserInfo(token.id_token)
-
+    console.log('ally:apple:user:user', user)
     return {
       ...user,
       token,

@@ -94,7 +94,7 @@ class AppleDriver extends standalone_1.Oauth2Driver {
          * Define user defined scopes or the default one's
          */
         request.scopes(this.config.scopes || ['email']);
-        request.param('client_id', this.config.clientId);
+        request.param('client_id', this.config.appId);
         request.param('response_type', 'code');
         request.param('response_mode', 'form_post');
         request.param('grant_type', 'authorization_code');

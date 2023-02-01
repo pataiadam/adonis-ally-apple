@@ -224,7 +224,7 @@ export class AppleDriver extends Oauth2Driver<AppleAccessToken, AppleScopes> {
     const signingKey = await this.getAppleSigningKey(token)
     const decodedUser = JWT.verify(token, signingKey, {
       issuer: 'https://appleid.apple.com',
-      // TODO: check if audience is correct
+      // TODO: add audience check
       // audience: this.config.appId,
     })
     const firstName = (decodedUser as AppleTokenDecoded)?.user?.name?.firstName || ''
@@ -265,7 +265,7 @@ export class AppleDriver extends Oauth2Driver<AppleAccessToken, AppleScopes> {
 
     return this.getAccessToken((request) => {
       request.header('Content-Type', 'application/x-www-form-urlencoded')
-      request.field('client_id', this.config.clientId)
+      request.field('client_id', this.config.appId)
       request.field('client_secret', this.generateClientSecret())
       request.field(this.codeParamName, this.getCode())
 
@@ -279,11 +279,9 @@ export class AppleDriver extends Oauth2Driver<AppleAccessToken, AppleScopes> {
    * Returns details for the authorized user
    */
   public async user(callback?: (request: ApiRequestContract) => void) {
-    console.log('ally:apple:user')
     const token = await this.accessToken(callback)
-    console.log('ally:apple:user:token', token)
     const user = await this.getUserInfo(token.id_token)
-    console.log('ally:apple:user:user', user)
+
     return {
       ...user,
       token,

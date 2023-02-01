@@ -140,7 +140,7 @@ class AppleDriver extends standalone_1.Oauth2Driver {
         const signingKey = await this.getAppleSigningKey(token);
         const decodedUser = jsonwebtoken_1.default.verify(token, signingKey, {
             issuer: 'https://appleid.apple.com',
-            // TODO: check if audience is correct
+            // TODO: add audience check
             // audience: this.config.appId,
         });
         const firstName = decodedUser?.user?.name?.firstName || '';
@@ -174,7 +174,7 @@ class AppleDriver extends standalone_1.Oauth2Driver {
         }
         return this.getAccessToken((request) => {
             request.header('Content-Type', 'application/x-www-form-urlencoded');
-            request.field('client_id', this.config.clientId);
+            request.field('client_id', this.config.appId);
             request.field('client_secret', this.generateClientSecret());
             request.field(this.codeParamName, this.getCode());
             if (typeof callback === 'function') {
@@ -186,11 +186,8 @@ class AppleDriver extends standalone_1.Oauth2Driver {
      * Returns details for the authorized user
      */
     async user(callback) {
-        console.log('ally:apple:user');
         const token = await this.accessToken(callback);
-        console.log('ally:apple:user:token', token);
         const user = await this.getUserInfo(token.id_token);
-        console.log('ally:apple:user:user', user);
         return {
             ...user,
             token,
